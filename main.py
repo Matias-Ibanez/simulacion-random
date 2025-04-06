@@ -1,3 +1,11 @@
-import generadores
+from cuadrado import ParteCentralDelCuadrado
+from lehmer import Lehmer
+from customtkinter import *
+from ui.main_window import MainApp
+root = CTk()
 
-lista = generadores.square_method(seed=123,n=3,iteration=5)
+root.mainloop()
+
+parte = ParteCentralDelCuadrado(123 ,3, 5)
+lehmer = Lehmer(4122,5, 76 )
+print(lehmer.numbers)
