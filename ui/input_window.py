@@ -8,7 +8,9 @@ class InputWindow(ctk.CTkToplevel):
         super().__init__(master)
         self.config = config
         self.title(config["title"])
-        self.geometry("400x250")
+        self.width = 600
+        self.height = 600
+        self._center_window()
         self.focus()
         self.grab_set()
         self.lift()
@@ -23,7 +25,9 @@ class InputWindow(ctk.CTkToplevel):
             entry.pack(pady=(0, 5))
             self.entries.append(entry)
 
-        ctk.CTkButton(self, text="Aceptar",command=self._call_method).pack(pady=10)
+        ctk.CTkButton(self, text="Generar",command=self._call_method).pack(pady=10)
+
+        frame = ctk.CTkScrollableFrame(self, orientation="vertical").pack(pady=10)
 
     def _call_method(self,):
         method = self.config["method"]
@@ -38,8 +42,3 @@ class InputWindow(ctk.CTkToplevel):
         y = int((window_height / 2) - (self.height / 2))
         self.geometry(f"{self.width}x{self.height}+{x}+{y}")
 
-    # def generar(self,seed,numbers_of_values,):
-    #     seed = self.entry_semilla.get()
-    #     numbers_of_values = self.entry_cantidad.get()
-    #
-    #     self.destroy()  # Cierra la ventana después de presionar "Generar"

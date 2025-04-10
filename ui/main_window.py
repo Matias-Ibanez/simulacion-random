@@ -6,18 +6,24 @@ class MainApp(ctk.CTk):
 
     def __init__(self):
         super().__init__()
-        self.methods = ["Parte Central del cuadrado", "Lehmer",
-                        "Congruencial Mixto", "Congrencial Multiplicativo",
-                        "Congruencial Aditivo"]
-        self.buttons = {}
+
         self.method_configs = {
             "Parte Central del cuadrado": {
                 "labels": ["Semilla", "Número de dígitos", "Cantidad de números"],
                 "title": "Método - Cuadrado Medio",
                 "method": _ParteCentralDelCuadrado.square_method,
-            }
-
+            },
+            "Lehmer" :{
+                "labels": ["Gero puto", "Número de dígitos", "Cantidad de números"],
+                "title": "Método - Gero re puto",
+                "method": _ParteCentralDelCuadrado.square_method,
+            },
+            "Congruencial Mixto" : {},
+            "Congruencial Multiplicativo" : {},
+            "Congruencial Aditivo" : {}
         }
+
+        self._set_appearance_mode("Dark")
 
         self.title("Generador de números aleatorios")
         self.width= 400
@@ -41,8 +47,7 @@ class MainApp(ctk.CTk):
             master=frame,
             text="Seleccionar método",
             font=("Inter", 20, "bold"),
-            fg_color = "transparent")
-        self.label.pack(pady=30)
+            fg_color = "transparent").pack(pady=30)
 
         for method in self.method_configs.keys():
             button = ctk.CTkButton(master=frame,
@@ -52,9 +57,7 @@ class MainApp(ctk.CTk):
                                    font= ("Inter", 14, "bold"),
                                    fg_color="#10B981",
                                    hover_color="#059669",
-                                   command=lambda m=method: self.open_popup(m))
-            button.pack(pady=10)
-            self.buttons[method] = button
+                                   command=lambda m=method: self.open_popup(m)).pack(pady=10)
 
     def center_window(self):
         window_width = self.winfo_screenwidth()
@@ -70,20 +73,3 @@ class MainApp(ctk.CTk):
                 master=self,
                 config=config,
             )
-
-
-
-    # @staticmethod
-    # def handle_button_click(method):
-    #    second_window = m_window.InputWindow(method)
-    #    second_window.focus()
-    #    second_window.grab_set()
-    #    second_window.lift()
-
-
-
-
-        # optionmenu = ctk.CTkOptionMenu(self, values=["option 1", "option 2"],
-        #                                          )
-        # optionmenu.grid(row=1, column = 1)
-        # optionmenu.set("option 2")
