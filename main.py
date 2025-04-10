@@ -1,8 +1,8 @@
 from cuadrado import ParteCentralDelCuadrado
 from lehmer import Lehmer
-from customtkinter import *
 from ui.main_window import MainApp
-root = CTk()
+
+root = MainApp()
 
 root.mainloop()
 
