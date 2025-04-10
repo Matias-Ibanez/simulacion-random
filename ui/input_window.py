@@ -1,30 +1,37 @@
 import customtkinter as ctk
-import cuadrado
+
 ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("blue")
 
 class InputWindow(ctk.CTkToplevel):
-    def __init__(self, metodo_numero):
-        super().__init__()
-        self.title(f"Método {metodo_numero}")
-        self.width = 300
-        self.height = 250
-        self.center_window()
+    def __init__(self, master, config):
+        super().__init__(master)
+        self.config = config
+        self.title(config["title"])
+        self.geometry("400x250")
+        self.focus()
+        self.grab_set()
+        self.lift()
+        self.resizable(False, False)
 
-        self.label_semilla = ctk.CTkLabel(self, text="Semilla:")
-        self.label_semilla.pack(pady=10)
-        self.entry_semilla = ctk.CTkEntry(self)
-        self.entry_semilla.pack(pady=5)
+        self.entries = []
 
-        self.label_cantidad = ctk.CTkLabel(self, text="Cantidad de números:")
-        self.label_cantidad.pack(pady=10)
-        self.entry_cantidad = ctk.CTkEntry(self)
-        self.entry_cantidad.pack(pady=5)
+        for label_text in config["labels"]:
+            label = ctk.CTkLabel(self, text=label_text)
+            label.pack(pady=(8, 0))
+            entry = ctk.CTkEntry(self, placeholder_text=label_text)
+            entry.pack(pady=(0, 5))
+            self.entries.append(entry)
 
-        self.button_generar = ctk.CTkButton(self, text="Generar")
-        self.button_generar.pack(pady=20)
+        ctk.CTkButton(self, text="Aceptar",command=self._call_method).pack(pady=10)
 
-    def center_window(self):
+    def _call_method(self,):
+        method = self.config["method"]
+        args = [int(entry.get()) for entry in self.entries]
+        result = method(*args)
+        print(result)
+
+    def _center_window(self):
         window_width = self.winfo_screenwidth()
         window_height = self.winfo_screenheight()
         x = int((window_width / 2) - (self.width / 2))
