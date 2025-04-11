@@ -1,6 +1,7 @@
 import customtkinter as ctk
-from ui.input_window import  InputWindow
+from ui.second_frame import  MethodFrame
 from methods.cuadrado import _ParteCentralDelCuadrado
+from methods.lehmer import _Lehmer
 
 class MainApp(ctk.CTk):
 
@@ -9,14 +10,14 @@ class MainApp(ctk.CTk):
 
         self.method_configs = {
             "Parte Central del cuadrado": {
-                "labels": ["Semilla", "Número de dígitos", "Cantidad de números"],
+                "labels": ["Semilla", "Número de dígitos", "Cantidad a generar",],
                 "title": "Método - Cuadrado Medio",
                 "method": _ParteCentralDelCuadrado.square_method,
             },
             "Lehmer" :{
-                "labels": ["Gero puto", "Número de dígitos", "Cantidad de números"],
-                "title": "Método - Gero re puto",
-                "method": _ParteCentralDelCuadrado.square_method,
+                "labels": ["Semilla", "Número", " Cantidad a generar"],
+                "title": "Método - Lehmer",
+                "method": _Lehmer.lehmer_method,
             },
             "Congruencial Mixto" : {},
             "Congruencial Multiplicativo" : {},
@@ -24,40 +25,35 @@ class MainApp(ctk.CTk):
         }
 
         self._set_appearance_mode("Dark")
-
         self.title("Generador de números aleatorios")
-        self.width= 400
+        self.width= 600
         self.height= 400
         self.center_window()
         self.resizable(False, False)
 
-        frame = ctk.CTkFrame(
-            master= self,
-            fg_color="#2D2D2D",
-            border_width=2,
-            border_color="#A78BFA",
-            corner_radius=15,
-            width = 300,
-            height = 300
-        )
-        frame.pack(expand =True)
-        frame.pack_propagate(False)
+        self.menu_frame = ctk.CTkFrame(self,fg_color="transparent")
+        self.menu_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        self._load_menu()
 
+        self.main_container = ctk.CTkFrame(self)
+        self.main_container.pack_forget()
+
+    def _load_menu(self):
         self.label = ctk.CTkLabel(
-            master=frame,
+            master=self.menu_frame,
             text="Seleccionar método",
             font=("Inter", 20, "bold"),
-            fg_color = "transparent").pack(pady=30)
+            fg_color="transparent").pack(pady=30)
 
         for method in self.method_configs.keys():
-            button = ctk.CTkButton(master=frame,
-                                   text=f"{method}",
-                                   width=220,
-                                   corner_radius=32,
-                                   font= ("Inter", 14, "bold"),
-                                   fg_color="#10B981",
-                                   hover_color="#059669",
-                                   command=lambda m=method: self.open_popup(m)).pack(pady=10)
+             ctk.CTkButton(master=self.menu_frame,
+                           text=f"{method}",
+                           width=220,
+                           corner_radius=32,
+                           font=("Inter", 14, "bold"),
+                           fg_color="#10B981",
+                           hover_color="#059669",
+                           command=lambda m=method: self.open_method_frame(m)).pack(pady=10)
 
     def center_window(self):
         window_width = self.winfo_screenwidth()
@@ -66,10 +62,17 @@ class MainApp(ctk.CTk):
         y = int((window_height / 2) - (self.height / 2))
         self.geometry(f"{self.width}x{self.height}+{x}+{y}")
 
-    def open_popup(self, method):
+    def open_method_frame(self, method):
         config = self.method_configs.get(method)
-        if config:
-            InputWindow(
-                master=self,
-                config=config,
-            )
+        self.menu_frame.pack_forget()
+
+        for widget in self.main_container.winfo_children():
+            widget.destroy()
+
+        method_frame = MethodFrame(master=self.main_container,method=method, config=config, back_callback=self.show_main_menu)
+        method_frame.pack(fill="both", expand=True)
+        self.main_container.pack(fill="both", expand=True)
+
+    def show_main_menu(self):
+        self.main_container.pack_forget()
+        self.menu_frame.pack(fill="both", expand=True)
