@@ -1,6 +1,8 @@
 import customtkinter as ctk
-from PIL import Image
 from ui.second_frame import  MethodFrame
+from methods.congruencial_mixto import _CongruencialMixto
+from methods.congruencial_multiplicativo import _CongruencialMultiplicativo
+from methods.congruencial_aditivo import _CongruencialAditivo
 from methods.cuadrado import _ParteCentralDelCuadrado
 from methods.lehmer import _Lehmer
 
@@ -20,9 +22,21 @@ class MainApp(ctk.CTk):
                 "title": "Método - Lehmer",
                 "method": _Lehmer.lehmer_method,
             },
-            "Congruencial Mixto" : {},
-            "Congruencial Multiplicativo" : {},
-            "Congruencial Aditivo" : {}
+            "Congruencial Mixto" : {
+                "labels": ["Semilla", "Constante multiplicativa", "Constante aditiva","Módulo", "Cantidad a generar"],
+                "title": "Método - Congruencial Mixto",
+                "method": _CongruencialMixto.mixed_congruent,
+            },
+            "Congruencial Multiplicativo" : {
+                "labels": ["Semilla", "Constante multiplicativa", "Módulo", "Cantidad a generar"],
+                "title": "Método - Congruencial Multiplicativo",
+                "method":_CongruencialMultiplicativo.multiplicative_congruential,
+            },
+            "Congruencial Aditivo" : {
+                "labels": ["Semilla inicial", "Módulo"],
+                "title": "Método - Congruencial Aditivo",
+                "method": _CongruencialAditivo.addition_congruential,
+            }
         }
 
         self._set_appearance_mode("Dark")
@@ -70,7 +84,9 @@ class MainApp(ctk.CTk):
         self.geometry(f"{self.width}x{self.height}+{x}+{y}")
 
     def open_method_frame(self, method):
+
         config = self.method_configs.get(method)
+
         self.menu_frame.pack_forget()
 
         for widget in self.main_container.winfo_children():
@@ -79,6 +95,7 @@ class MainApp(ctk.CTk):
         method_frame = MethodFrame(master=self.main_container,method=method, config=config, back_callback=self.show_main_menu)
         method_frame.pack(fill="both", expand=True)
         self.main_container.pack(fill="both", expand=True)
+
 
     def show_main_menu(self):
         self.main_container.pack_forget()

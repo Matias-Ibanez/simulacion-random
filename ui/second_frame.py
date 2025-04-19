@@ -55,6 +55,23 @@ class MethodFrame(ctk.CTkFrame):
             entry.pack(fill = "x", padx = 20,  pady=(0, 5))
             self.entries.append(entry)
 
+        if self.method_name == "Congruencial Aditivo":
+            semillas_label = ctk.CTkLabel(
+                master=self.input_frame,
+                text="Semillas",
+                font=("Inter", 18, "bold")
+            )
+            semillas_label.pack(fill="x", padx=20, pady=(10, 5))
+
+            self.semillas_textbox = ctk.CTkTextbox(
+                master=self.input_frame,
+                height=100,
+                border_color="#059669",
+                border_width=2
+            )
+            self.semillas_textbox.pack(fill="both", expand=False, padx=20, pady=(0, 10))
+            self.semillas_textbox.bind("<KeyRelease>", self._seed_validation_input)
+
         ctk.CTkButton(
             self.input_frame,
             text="Generar",
@@ -75,11 +92,17 @@ class MethodFrame(ctk.CTkFrame):
 
     def _call_method(self):
         for widget in self.results_scroll.winfo_children():
-            widget.destroy()
+                widget.destroy()
         try:
             method = self.config["method"]
             args = [int(entry.get()) for entry in self.entries]
-            result = method(*args)
+
+            if self.method_name == "Congruencial Aditivo":
+                semillas = self._get_seeds()
+                print("Semillas ingresadas:", semillas)
+                result = method(*args, semillas)
+            else:
+                result = method(*args)
 
             for index, value in enumerate(result):
                 ctk.CTkLabel(
@@ -87,7 +110,6 @@ class MethodFrame(ctk.CTkFrame):
                     text=f"U{index + 1} = {value}",
                     font=("Inter", 18)
                 ).pack(pady=10)
-
 
         except ValueError:
             self.error_label = ctk.CTkLabel(
@@ -97,6 +119,35 @@ class MethodFrame(ctk.CTkFrame):
             )
             self.error_label.pack(pady=10)
             self.after(2000, self.error_label.destroy)
+
+    def _get_seeds(self):
+        texto = self.semillas_textbox.get("0.0", "end").strip()
+
+        if not texto:
+            return []
+
+        seed_str = texto.split(",")
+        seeds = []
+
+        for s in seed_str:
+            s = s.strip()
+            if not s.isdigit():
+                raise ValueError(f"Semilla inválida: '{s}' (solo se permiten números enteros separados por coma)")
+            seeds.append(int(s))
+
+        return seeds
+
+    def _seed_validation_input(self, event=None):
+        text = self.semillas_textbox.get("0.0", "end")
+        text_validado = ""
+
+        for char in text:
+            if char.isdigit() or char == "," or char in ["\n", " "]:
+                text_validado += char
+
+        if text != text_validado:
+            self.semillas_textbox.delete("0.0", "end")
+            self.semillas_textbox.insert("0.0", text_validado)
 
 
 
