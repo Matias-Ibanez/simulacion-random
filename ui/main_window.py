@@ -33,7 +33,7 @@ class MainApp(ctk.CTk):
                 "method":_CongruencialMultiplicativo.multiplicative_congruential,
             },
             "Congruencial Aditivo" : {
-                "labels": ["Semilla inicial", "Módulo"],
+                "labels": ["Semilla inicial", "Módulo", "Cantidad a generar"],
                 "title": "Método - Congruencial Aditivo",
                 "method": _CongruencialAditivo.addition_congruential,
             }
