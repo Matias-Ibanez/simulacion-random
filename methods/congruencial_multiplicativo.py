@@ -1,3 +1,7 @@
+from Tests.promedios import _Promedios
+from Tests.frecuencia import _Frecuencia
+from Tests.serie import _Serie
+
 class _CongruencialMultiplicativo:
     @staticmethod
     def _new_seed(seed, a, m):
@@ -11,4 +15,8 @@ class _CongruencialMultiplicativo:
             seed = new_seed
             u = int((new_seed / m) * 1000) / 1000
             numbers.append(u)
+
+            #_Promedios.prueba_promedios(numbers)
+        #_Frecuencia.prueba_frecuencia(numbers)
+        _Serie.prueba_serie(numbers)
         return numbers

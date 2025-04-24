@@ -1,3 +1,7 @@
+from Tests.promedios import _Promedios
+from Tests.frecuencia import _Frecuencia
+from Tests.serie import _Serie
+
 class _CongruencialAditivo:
     @staticmethod
     def _new_seed(current_seed, last_seed, m):
@@ -29,6 +33,8 @@ class _CongruencialAditivo:
             numbers.append(u)
             seeds.append(new_seed)
 
+        #_Frecuencia.prueba_frecuencia(numbers)
+        _Serie.prueba_serie(numbers)
         return numbers
 
 

@@ -1,3 +1,7 @@
+from Tests.promedios import _Promedios
+from Tests.frecuencia import _Frecuencia
+from Tests.serie import _Serie
+
 class _Lehmer:
     @staticmethod
     def lehmer_method(seed,number, number_of_values):
@@ -10,6 +14,10 @@ class _Lehmer:
             u = float("0." + str(subtraction))
             numbers.append(u)
             seed = subtraction
+        #_Promedios.prueba_promedios(numbers)
+        #_Frecuencia.prueba_frecuencia(numbers)
+        _Serie.prueba_serie(numbers)
+
         return numbers
 
 
