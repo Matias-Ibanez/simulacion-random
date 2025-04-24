@@ -3,10 +3,13 @@ import customtkinter as ctk
 class _Serie:
     @staticmethod
     def prueba_serie(muestra, frame):
+        frame.configure(fg_color="red")
 
-        label = ctk.CTkLabel(muestra, text="Prueba KS", font=("Arial", 20))
-        label.pack(pady=20)
+        label = ctk.CTkLabel(frame, text="Prueba de la Serie", font=("Arial", 20))
+        label.pack(padx=20, pady=20, fill="both", expand=True)
 
+
+"""
         if len(muestra) < 2:
             print("La muestra debe tener al menos 2 valores.")
             return
@@ -52,3 +55,4 @@ class _Serie:
             print(f"{chi_cuadrado:.5f} < {chi_cuadrado_alpha} → No se rechaza la hipótesis de uniformidad.")
         else:
             print(f"{chi_cuadrado:.5f} ≥ {chi_cuadrado_alpha} → Se rechaza la hipótesis de uniformidad.")
+"""

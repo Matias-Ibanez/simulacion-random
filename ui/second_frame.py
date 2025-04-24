@@ -115,8 +115,6 @@ class MethodFrame(ctk.CTkFrame):
 
     def _call_method(self):
 
-        global result
-
         for widget in self.results_scroll.winfo_children():
                 widget.destroy()
         try:
@@ -129,6 +127,7 @@ class MethodFrame(ctk.CTkFrame):
                 result = method(*args, semillas)
             else:
                 result = method(*args)
+                self.resultado_generado = result
 
             for index, value in enumerate(result):
                 ctk.CTkLabel(
@@ -136,6 +135,7 @@ class MethodFrame(ctk.CTkFrame):
                     text=f"U{index + 1} = {value}",
                     font=("Inter", 18)
                 ).pack(pady=10)
+
 
         except ValueError:
             self.error_label = ctk.CTkLabel(
@@ -208,21 +208,26 @@ class MethodFrame(ctk.CTkFrame):
         for widget in self.test_frame.winfo_children():
             widget.destroy()
 
-        muestra = result
+        self.test_frame.update_idletasks()
+
+        muestra = self.resultado_generado
 
         if test_name == "ks":
             from Tests.ks import _Ks
             _Ks.prueba_ks(muestra, self.test_frame)
 
         elif test_name == "promedios":
-            from Tests.promedios import prueba_promedios
-            prueba_promedios(muestra, self.test_frame)
+            from Tests.promedios import _Promedios
+            _Promedios.prueba_promedios(muestra, self.test_frame)
+
         elif test_name == "corrida_a_a_media":
-            from Tests.corrida_a_a_media import prueba_corrida
-            prueba_corrida(muestra, self.test_frame)
+            from Tests.corrida_a_a_media import _Corrida
+            _Corrida.prueba_corrida(muestra, self.test_frame)
+
         elif test_name == "frecuencia":
-            from Tests.frecuencia import prueba_frecuencia
-            prueba_frecuencia(muestra, self.test_frame)
+            from Tests.frecuencia import _Frecuencia
+            _Frecuencia.prueba_frecuencia(muestra, self.test_frame)
+
         elif test_name == "serie":
-            from Tests.serie import prueba_serie
-            prueba_serie(muestra, self.test_frame)
+            from Tests.serie import _Serie
+            _Serie.prueba_serie(muestra, self.test_frame)

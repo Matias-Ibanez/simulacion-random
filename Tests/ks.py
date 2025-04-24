@@ -4,9 +4,12 @@ class _Ks:
     @staticmethod
 
     def prueba_ks(muestra, frame):
+        frame.configure(fg_color="red")
 
-        label = ctk.CTkLabel(master=frame, text=f"Prueba KS {muestra}" , font=("Arial", 20))
-        label.pack(pady=20)
+        label = ctk.CTkLabel(frame, text="Prueba de Kolmogorov - Smirnov (K-S)", font=("Arial", 20))
+        label.pack(padx=20, pady=20, fill="both", expand=True)
+
+
 
 
 """

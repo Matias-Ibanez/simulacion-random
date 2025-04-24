@@ -5,10 +5,12 @@ class _Frecuencia:
     @staticmethod
 
     def prueba_frecuencia(muestra, frame):
+        frame.configure(fg_color="red")  # Solo para testear visualmente
 
-        label = ctk.CTkLabel(muestra, text="Prueba KS", font=("Arial", 20))
-        label.pack(pady=20)
+        label = ctk.CTkLabel(frame, text="Prueba de la frecuencia", font=("Arial", 20))
+        label.pack(padx=20, pady=20, fill="both", expand=True)
 
+"""
         n = len(muestra)
         x = int(input("Ingrese el número de sub-intervalos (x): "))
         chi_cuadrado_alpha = float(input("Ingrese el valor crítico de chi-cuadrado (𝜒²α): "))
@@ -33,3 +35,4 @@ class _Frecuencia:
             print(f"{chi_cuadrado:.5f} < {chi_cuadrado_alpha} → No se rechaza la hipótesis de uniformidad.")
         else:
             print(f"{chi_cuadrado:.5f} ≥ {chi_cuadrado_alpha} → Se rechaza la hipótesis de uniformidad.")
+"""

@@ -5,10 +5,12 @@ class _Corrida:
 
     def prueba_corrida(muestra, frame):
 
-        label = ctk.CTkLabel(muestra, text="Prueba corrida", font=("Arial", 20))
-        label.pack(pady=20)
+        frame.configure(fg_color="red")
 
+        label = ctk.CTkLabel(frame, text="Prueba de corrida arriba y abajo de la media", font=("Arial", 20))
+        label.pack(padx=20, pady=20, fill="both", expand=True)
 
+"""
         n = len(muestra) #tamano de la muestra
         estadistico = float(input("Introduce el valor del estadístico: "))
 
@@ -76,4 +78,4 @@ class _Corrida:
         if estadisticoXcuadrado < estadistico:
             print("No se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido")
 
-
+"""
