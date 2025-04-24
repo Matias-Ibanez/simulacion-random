@@ -1,9 +1,13 @@
+import customtkinter as ctk
+
 class _Corrida:
     @staticmethod
 
-    def prueba_corrida(muestra):
+    def prueba_corrida(muestra, frame):
 
-        muestra = [0.01 , 0.079, 0.168, 0.858, 0.901, 0.74, 0.713, 0.478, 0.277, 0.019, 0.548, 0.426]
+        label = ctk.CTkLabel(muestra, text="Prueba corrida", font=("Arial", 20))
+        label.pack(pady=20)
+
 
         n = len(muestra) #tamano de la muestra
         estadistico = float(input("Introduce el valor del estadístico: "))
@@ -73,4 +77,3 @@ class _Corrida:
             print("No se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido")
 
 
-_Corrida.prueba_corrida([0.01 , 0.079, 0.168, 0.858, 0.901, 0.74, 0.713, 0.478, 0.277, 0.019, 0.548, 0.426])

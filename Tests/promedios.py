@@ -1,8 +1,13 @@
 import math
+import customtkinter as ctk
 
 class _Promedios:
     @staticmethod
-    def prueba_promedios(muestra):
+    def prueba_promedios(muestra,frame):
+
+        label = ctk.CTkLabel(muestra, text="Prueba promedios", font=("Arial", 20))
+        label.pack(pady=20)
+
         z_alpha = float(input("Ingrese el valor de Zα (nivel de significancia): "))
         n = len(muestra)
         promedio = sum(muestra) / n

@@ -1,6 +1,12 @@
+import customtkinter as ctk
+
 class _Serie:
     @staticmethod
-    def prueba_serie(muestra):
+    def prueba_serie(muestra, frame):
+
+        label = ctk.CTkLabel(muestra, text="Prueba KS", font=("Arial", 20))
+        label.pack(pady=20)
+
         if len(muestra) < 2:
             print("La muestra debe tener al menos 2 valores.")
             return

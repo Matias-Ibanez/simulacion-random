@@ -1,9 +1,14 @@
 import math
+import customtkinter as ctk
 
 class _Frecuencia:
     @staticmethod
 
-    def prueba_frecuencia(muestra):
+    def prueba_frecuencia(muestra, frame):
+
+        label = ctk.CTkLabel(muestra, text="Prueba KS", font=("Arial", 20))
+        label.pack(pady=20)
+
         n = len(muestra)
         x = int(input("Ingrese el número de sub-intervalos (x): "))
         chi_cuadrado_alpha = float(input("Ingrese el valor crítico de chi-cuadrado (𝜒²α): "))

@@ -1,9 +1,16 @@
 import customtkinter as ctk
+import importlib
+import Tests.ks
+import Tests.promedios
+import Tests.serie
+import Tests.corrida_a_a_media
+import Tests.frecuencia
 
 def only_numbers(valor):
     return valor.isdigit() or valor == ""
 
 class MethodFrame(ctk.CTkFrame):
+
     def __init__(self, master, method, config, back_callback):
         super().__init__(master)
         self.config = config
@@ -21,8 +28,22 @@ class MethodFrame(ctk.CTkFrame):
         self.result_frame.pack(side= "top", fill= "x", padx=10, pady=10)
         self.result_frame.pack_propagate(False)
 
-        self.test_frame = ctk.CTkFrame(master=self, corner_radius=15)
+        self.test_frame = ctk.CTkScrollableFrame(
+            master=self,
+            corner_radius=15,
+            fg_color="green",
+            orientation="vertical"  # Este es el default
+        )
+
+        test_title = ctk.CTkLabel(
+            master=self.test_frame,
+            text="Pruebas estadísticas",
+            font=("Inter", 22, "bold"),
+            text_color="#ffffff"
+        )
+        test_title.pack(pady=(10,5))
         self.test_frame.pack(fill="both", padx=10, pady=10)
+
 
         j_title = ctk.CTkLabel(master=self.result_frame, text = self.method_name, font=("Inter", 25, "bold"))
         j_title.pack(side= "top")
@@ -90,7 +111,12 @@ class MethodFrame(ctk.CTkFrame):
             font=("Inter", 18, "bold")
         ).pack(pady=10)
 
+        self._load_Tests_menu()
+
     def _call_method(self):
+
+        global result
+
         for widget in self.results_scroll.winfo_children():
                 widget.destroy()
         try:
@@ -149,14 +175,54 @@ class MethodFrame(ctk.CTkFrame):
             self.semillas_textbox.delete("0.0", "end")
             self.semillas_textbox.insert("0.0", text_validado)
 
+    def _load_Tests_menu(self):
+        pruebas = ["promedios", "corrida_a_a_media", "frecuencia", "ks", "serie"]
 
+        for test_name in pruebas:
 
+            if test_name == "promedios":
+                text = "Prueba de los promedios"
+                command = lambda: self._cargar_test("promedios")
+            if test_name == "corrida_a_a_media":
+                text = "Prueba de corrida arriba y abajo de la media"
+                command = lambda: self._cargar_test("corrida_a_a_media")
+            if test_name == "frecuencia":
+                text = "Prueba de la frecuencia"
+                command = lambda: self._cargar_test("frecuencia")
+            if test_name == "ks":
+                text = "Prueba de Kolmogorov-Smirnov (K-S)"
+                command = lambda: self._cargar_test("ks")
+            if test_name == "serie":
+                text = "Prueba de la serie"
+                command = lambda: self._cargar_test("serie")
 
+            btn = ctk.CTkButton(
+                self.test_frame,
+                text = text,
+                fg_color="#3B82F6",
+                hover_color="#2563EB",
+                command=command)
+            btn.pack(pady=10, padx=20)
 
+    def _cargar_test(self, test_name):
+        for widget in self.test_frame.winfo_children():
+            widget.destroy()
 
+        muestra = result
 
+        if test_name == "ks":
+            from Tests.ks import _Ks
+            _Ks.prueba_ks(muestra, self.test_frame)
 
-
-
-
-
+        elif test_name == "promedios":
+            from Tests.promedios import prueba_promedios
+            prueba_promedios(muestra, self.test_frame)
+        elif test_name == "corrida_a_a_media":
+            from Tests.corrida_a_a_media import prueba_corrida
+            prueba_corrida(muestra, self.test_frame)
+        elif test_name == "frecuencia":
+            from Tests.frecuencia import prueba_frecuencia
+            prueba_frecuencia(muestra, self.test_frame)
+        elif test_name == "serie":
+            from Tests.serie import prueba_serie
+            prueba_serie(muestra, self.test_frame)
