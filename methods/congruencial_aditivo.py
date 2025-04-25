@@ -33,8 +33,6 @@ class _CongruencialAditivo:
             numbers.append(u)
             seeds.append(new_seed)
 
-        #_Frecuencia.prueba_frecuencia(numbers)
-        _Serie.prueba_serie(numbers)
         return numbers
 
 

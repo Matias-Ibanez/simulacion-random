@@ -1,38 +1,85 @@
 import math
 import customtkinter as ctk
+from customtkinter import CTkLabel, CTkFont
 
 class _Frecuencia:
+
     @staticmethod
+    def continuar(frame, estadistico_input, cant_intervalos_input,muestra):
+        estadistico = estadistico_input.get()
+        intervalos = cant_intervalos_input.get()
 
-    def prueba_frecuencia(muestra, frame):
-        frame.configure(fg_color="red")  # Solo para testear visualmente
+        for widget in frame.winfo_children():
+            widget.destroy()
 
-        label = ctk.CTkLabel(frame, text="Prueba de la frecuencia", font=("Arial", 20))
-        label.pack(padx=20, pady=20, fill="both", expand=True)
+        _Frecuencia.calcular(frame, estadistico, intervalos,muestra)
 
-"""
+    @staticmethod
+    def calcular(frame, estadistico, intervalos, muestra):
+        font_bold = CTkFont(family="Arial", size=25, weight="bold")
+
         n = len(muestra)
-        x = int(input("Ingrese el número de sub-intervalos (x): "))
-        chi_cuadrado_alpha = float(input("Ingrese el valor crítico de chi-cuadrado (𝜒²α): "))
 
-        fe = n / x
-        print(f"\nFrecuencia esperada (Fe): {fe:.2f}")
+        fe = n / int(intervalos)
 
-        frecuencias_observadas = [0] * x
+        label1 = ctk.CTkLabel(frame, text="", font=font_bold, text_color="white", wraplength=300)
+        label1.pack(padx=20, pady=20, fill="both", expand=True)
+        label1.configure(text=f"Frecuencia esperada (Fe): {fe}")
+
+        frecuencias_observadas = [0] * int(intervalos)
 
         for valor in muestra:
-            indice = min(int(valor * x), x - 1)
+            indice = min(int(valor * int(intervalos)), int(intervalos) - 1)
             frecuencias_observadas[indice] += 1
 
-        print("\nFrecuencias observadas:")
+        label2 = ctk.CTkLabel(frame, text="Frecuencias observadas:", font=font_bold, text_color="white", wraplength=300)
+        label2.pack(padx=20, pady=20, fill="both", expand=True)
+
         for i, fo in enumerate(frecuencias_observadas, 1):
-            print(f"Fo{i} = {fo}")
+            texto = f"Fo{i} = {fo}"
+            label3 = ctk.CTkLabel(frame, text=texto, font=("Arial", 14))
+            label3.pack(padx=20, pady=5, fill="both", expand=True)
 
         chi_cuadrado = sum((fo - fe) ** 2 / fe for fo in frecuencias_observadas)
-        print(f"\nEstadístico 𝜒²: {chi_cuadrado:.5f}")
 
-        if chi_cuadrado < chi_cuadrado_alpha:
-            print(f"{chi_cuadrado:.5f} < {chi_cuadrado_alpha} → No se rechaza la hipótesis de uniformidad.")
+        label4 = ctk.CTkLabel(frame, text="", font=font_bold, text_color="white", wraplength=300)
+        label4.pack(padx=20, pady=20, fill="both", expand=True)
+        label4.configure(text=f"Estadístico ingresado: {estadistico}")
+
+        label4 = ctk.CTkLabel(frame, text="", font=font_bold, text_color="white", wraplength=300)
+        label4.pack(padx=20, pady=20, fill="both", expand=True)
+        label4.configure(text=f"Estadístico 𝜒²: {chi_cuadrado}")
+
+        if chi_cuadrado < float(estadistico):
+            label9 = ctk.CTkLabel(frame,
+                                  text="Al ser el estadístico 𝜒² menor que el estadístico ingresado, no se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido",
+                                  wraplength=400, font=font_bold, text_color="white")
+            label9.pack(padx=20, pady=20, fill="both", expand=True)
         else:
-            print(f"{chi_cuadrado:.5f} ≥ {chi_cuadrado_alpha} → Se rechaza la hipótesis de uniformidad.")
-"""
+            label10 = ctk.CTkLabel(frame,
+                                   text="Al ser el estadístico 𝜒² mayor que el estadístico ingresado, se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido",
+                                   wraplength=400, font=font_bold, text_color="white")
+            label10.pack(padx=20, pady=20, fill="both", expand=True)
+
+
+    @staticmethod
+    def prueba_frecuencia(muestra, frame):
+        font_bold = CTkFont(family="Arial", size=25, weight="bold")
+
+        label = ctk.CTkLabel(frame, text="Prueba de la frecuencia", wraplength=500, font=font_bold, text_color="white")
+        label.pack(padx=20, pady=15, fill="both", expand=True)
+
+        label2 = ctk.CTkLabel(frame, text="Ingrese el dato del estadístico:", font=("Arial", 20), text_color="white")
+        label2.pack(padx=20, pady=5, fill="both", expand=True)
+
+        estadistico_input = ctk.CTkEntry(master=frame, placeholder_text="Estadístico", font=("Arial", 15))
+        estadistico_input.pack(pady=5)
+
+        label2 = ctk.CTkLabel(frame, text="Ingrese el número de subintervalos:", font=("Arial", 20), text_color="white")
+        label2.pack(padx=20, pady=5, fill="both", expand=True)
+
+        cant_intervalos_input = ctk.CTkEntry(master=frame, placeholder_text="Número", font=("Arial", 15))
+        cant_intervalos_input.pack(pady=5)
+
+        boton_continuar = ctk.CTkButton(frame, text="Continuar", command=lambda: _Frecuencia.continuar(frame, estadistico_input, cant_intervalos_input,muestra))
+        boton_continuar.pack(pady=5)

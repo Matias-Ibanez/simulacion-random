@@ -14,9 +14,6 @@ class _Lehmer:
             u = float("0." + str(subtraction))
             numbers.append(u)
             seed = subtraction
-        #_Promedios.prueba_promedios(numbers)
-        #_Frecuencia.prueba_frecuencia(numbers)
-        _Serie.prueba_serie(numbers)
 
         return numbers
 

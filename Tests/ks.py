@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from customtkinter import CTkLabel, CTkFont
 
 class _Ks:
 
@@ -16,12 +17,14 @@ class _Ks:
     def calcular(frame, estadistico, muestra):
         muestra.sort()  # la ordena
 
+        font_bold = CTkFont(family="Arial", size=20, weight="bold")
+
         n = len(muestra)  # tamano de la muestra
 
-        label3 = ctk.CTkLabel(frame, text="Muestra ordenada de menor a mayor:",wraplength=300,font=("Arial", 15))
+        label3 = ctk.CTkLabel(frame, text="Muestra ordenada de menor a mayor:",wraplength=300,font=font_bold, text_color="white")
         label3.pack(padx=20, pady=20, fill="both", expand=True)
 
-        label4 = ctk.CTkLabel(frame, text="", font=("Arial", 15))
+        label4 = ctk.CTkLabel(frame, text="",wraplength=300 ,font=("Arial", 15))
         label4.pack(padx=20, pady=20, fill="both", expand=True)
         label4.configure(text=str(muestra))
 
@@ -30,7 +33,7 @@ class _Ks:
         for i in range(n):
             dist_acum.append(i / n)  # distribucion acumulada
 
-        label5 = ctk.CTkLabel(frame, text="Distribución acumulada Fn(X):",wraplength=300, font=("Arial", 15))
+        label5 = ctk.CTkLabel(frame, text="Distribución acumulada Fn(X):",wraplength=300, font=font_bold, text_color="white")
         label5.pack(padx=20, pady=20, fill="both", expand=True)
 
         label6 = ctk.CTkLabel(frame, text="",wraplength=300 ,font=("Arial", 15))
@@ -44,34 +47,36 @@ class _Ks:
 
         estadisticoKS = max(aux)
 
-        label10 = ctk.CTkLabel(frame, text="", font=("Arial", 15))
+        label10 = ctk.CTkLabel(frame, text="", font=font_bold, text_color="white",wraplength=300)
         label10.pack(padx=20, pady=20, fill="both", expand=True)
         label10.configure(text=f"Estadistico: {estadistico}")
 
-        label7 = ctk.CTkLabel(frame, text="", font=("Arial", 15))
+        label7 = ctk.CTkLabel(frame, text="", font=font_bold, text_color="white",wraplength=300)
         label7.pack(padx=20, pady=20, fill="both", expand=True)
-        label7.configure(text=f"Estadistico K-S: {estadisticoKS}")
+        label7.configure(text=f"Estadístico K-S: {estadisticoKS}")
 
         if estadisticoKS < float(estadistico):
-            label8 = ctk.CTkLabel(frame, text="Al ser el estadistico K-S menor que el estadistico ingresado, no se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido",wraplength=400 ,font=("Arial", 15))
+            label8 = ctk.CTkLabel(frame, text="Al ser el estadístico K-S menor que el estadístico ingresado, no se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido",wraplength=400 ,font=font_bold, text_color="white")
             label8.pack(padx=20, pady=20, fill="both", expand=True)
         else:
-            label9 = ctk.CTkLabel(frame, text="Al ser el estadistico K-S mayor que el estadistico ingresado, se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido", wraplength=400, font=("Arial", 15))
+            label9 = ctk.CTkLabel(frame, text="Al ser el estadístico K-S mayor que el estadístico ingresado, se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido", wraplength=400, font=font_bold, text_color="white")
             label9.pack(padx=20, pady=20, fill="both", expand=True)
 
     @staticmethod
 
     def prueba_ks(muestra, frame):
 
-        label = ctk.CTkLabel(frame, text="Prueba de Kolmogorov - Smirnov (K-S)", font=("Arial", 20))
+        font_bold = CTkFont(family="Arial", size=25, weight="bold")
+
+        label = ctk.CTkLabel(frame, text="Prueba de Kolmogorov - Smirnov (K-S)", font=font_bold,text_color="white")
         label.pack(padx=20, pady=20, fill="both", expand=True)
 
-        label2 = ctk.CTkLabel(frame, text="Ingrese el dato del estadístico:", font=("Arial", 15))
-        label2.pack(padx=20, pady=20, fill="both", expand=True)
+        label2 = ctk.CTkLabel(frame, text="Ingrese el dato del estadístico:", font=("Arial", 20),text_color="white")
+        label2.pack(padx=20, pady=5, fill="both", expand=True)
 
-        estadistico_input = ctk.CTkEntry(master=frame, placeholder_text="Introduce estadístico", font=("Arial", 15))
-        estadistico_input.pack(pady=10)
+        estadistico_input = ctk.CTkEntry(master=frame, placeholder_text="Estadístico", font=("Arial", 15))
+        estadistico_input.pack(pady=5)
 
         boton_continuar = ctk.CTkButton(frame, text="Continuar", command=lambda: _Ks.continuar(frame, estadistico_input, muestra))
-        boton_continuar.pack(pady=10)
+        boton_continuar.pack(pady=5)
 

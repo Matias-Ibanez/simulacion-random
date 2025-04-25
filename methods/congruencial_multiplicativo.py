@@ -16,7 +16,4 @@ class _CongruencialMultiplicativo:
             u = int((new_seed / m) * 1000) / 1000
             numbers.append(u)
 
-            #_Promedios.prueba_promedios(numbers)
-        #_Frecuencia.prueba_frecuencia(numbers)
-        _Serie.prueba_serie(numbers)
         return numbers

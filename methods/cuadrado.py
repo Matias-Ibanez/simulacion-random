@@ -23,7 +23,6 @@ class _ParteCentralDelCuadrado:
             seed = int(middle_numbers)
             u = float("0." + middle_numbers)
             numbers.append(u)
-        #_Frecuencia.prueba_frecuencia(muestra)
 
         return numbers
 
